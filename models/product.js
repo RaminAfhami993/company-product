@@ -9,6 +9,11 @@ const ProductSchema = new Schema({
     },
     CreationDate: {
         type: Date
+    },  
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true  
     },
     CreatedAt: {
         type: Date,
