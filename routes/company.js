@@ -1,6 +1,8 @@
 const express = require("express");
 const Router = express.Router();
 const Company = require('../models/company');
+const Product = require('../models/product');
+
 
 
 Router.get('/companiesPage', (req, res) => {
@@ -20,8 +22,25 @@ Router.get('/all', (req, res) => {
 Router.get('/:id', (req, res) => {
     Company.findOne({_id: req.params.id}, (err, company) => {
         if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
-        res.json(company);
+        Product.find({company: company._id}, (err, products) => {
+            if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
+
+            res.render('companyInfo', {company, products})
+
+        })
     })
+
+    // Company.findOne({_id: req.params.id}, (err, company) => {
+    //     if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
+    //     Factor.find({company: company._id}, {company: 0}).populate('product', {__v: 0}).exec((err, factors) => {
+    //         if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
+
+    //         return res.json(factors)
+    //     })
+      
+    // })
+    
+
 });
 
 Router.put('/', (req, res) => {
@@ -50,6 +69,8 @@ Router.post('/:id', (req, res) => {
         if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
         res.json(company);
     })
+
+
 });
 
 Router.delete('/:id', (req, res) => {
@@ -61,9 +82,12 @@ Router.delete('/:id', (req, res) => {
         
             Product.deleteMany({company: company._id}, err => {
                 if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
-                res.json({company, msg: "success"});
-            })
 
+                Company.find({}, (err, companies) => {
+                    if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
+                    res.render('company', {companies})
+                })
+            })
         });
         
     })

@@ -9,6 +9,8 @@ $(document).ready(() => {
             url: `/company/${$(this).attr("companyId")}`,
             success: function(data) {
                 console.log(data);
+
+                window.location.href = "http://localhost:5005/company/companiesPage"
                 
             },
             error: function(err) {

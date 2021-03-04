@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>company info:</h1>
+    <p>name: <%= company.name %></p>
+    <p>employees: <%= company.employees %></p>
+
+
+    <br>
+    <br>
+
+    <h1>products</h1>
+    <% products.forEach(product => { %>
+        <br>
+        <p><%= product.name %></p>
+        <p><%= product.CreationDate %></p>
+        <p><%= company.name %></p>
+
+    <% }) %>
+</body>
+</html>

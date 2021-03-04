@@ -6,7 +6,7 @@ const Company = require('../models/company');
 
 
 Router.get('/all', (req, res) => {
-    Product.find({}, {__v: 0}).limit(3).sort({name: -1}).lean().populate('company', {name: 1}).exec((err, products) => {
+    Product.find({}, {__v: 0}).populate('company', {name: 1}).exec((err, products) => {
         if (err) return res.status(500).json({msg: "Server Error :)", err: err.message});
         res.json(products)
     });
